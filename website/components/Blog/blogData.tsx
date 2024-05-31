@@ -6,7 +6,7 @@ const blogData: Blog[] = [
     title: "Data Controller Trainings",
     paragraph:
       "In the digital age, the role of data controllers is pivotal in ensuring the responsible handling of sensitive information. Our Data Controller Trainings provide comprehensive education and skills development to equip your team with the knowledge and expertise needed to excel in this crucial role, fostering a culture of compliance and data stewardship within your organization.",
-    image: "/images/blog/blog-01.jpg",
+    image: "/images/blog/img2.jpg",
     author: {
       name: "Samuyl Joshi",
       image: "/images/blog/author-01.png",
@@ -20,7 +20,7 @@ const blogData: Blog[] = [
     title: " Data Processor Trainings",
     paragraph:
       "Our Data Processor Trainings offer a concise yet comprehensive exploration of the vital role data processors play in managing and safeguarding sensitive information. Tailored to meet the demands of today's data-driven world, our training program equips participants with the knowledge and skills necessary to excel in this critical function.",
-    image: "/images/blog/blog-02.jpg",
+    image: "/images/blog/img1.jpg",
     author: {
       name: "Musharof Chy",
       image: "/images/blog/author-02.png",
@@ -37,7 +37,7 @@ const blogData: Blog[] = [
     image: "/images/blog/blog-03.jpg",
     author: {
       name: "Lethium Deo",
-      image: "/images/blog/author-03.png",
+      image: "/images/blog/img3.png",
       designation: "Graphic Designer",
     },
     tags: ["design"],

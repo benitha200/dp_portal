@@ -57,10 +57,10 @@ const Header = () => {
                 } `}
               >
                 <h1 className="mb-5 text-2xl font-bold leading-tight text-black dark:text-white sm:text-2xl sm:leading-tight md:text-3xl md:leading-tight">
-                  DP 
+                 
                 
                 <span className="mb-5 text-2xl font-bold leading-tight text-primary dark:text-white sm:text-2xl ml-2 sm:leading-tight md:text-3xl md:leading-tight">
-                  Portal 
+                ProtectIQ 
                 </span></h1>
                 
                 {/* <Image
