@@ -1,14 +1,14 @@
+"use client"
 import Link from "next/link";
 
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Sign In Page | Free Next.js Template for Startup and SaaS",
-  description: "This is Sign In Page for Startup Nextjs Template",
-  // other metadata
-};
 
 const SigninPage = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    window.location.href = "http://localhost:3001";
+  };
   return (
     <>
       <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
@@ -30,7 +30,7 @@ const SigninPage = () => {
                   </p>
                   <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color/50 sm:block"></span>
                 </div>
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="mb-8">
                     <label
                       htmlFor="email"
@@ -103,7 +103,7 @@ const SigninPage = () => {
                     </div>
                   </div>
                   <div className="mb-6">
-                    <button className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90">
+                    <button type="submit" className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90">
                       Sign in
                     </button>
                   </div>
