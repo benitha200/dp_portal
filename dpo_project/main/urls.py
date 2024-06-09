@@ -19,17 +19,36 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from courses.views import CourseViewSet, ModuleViewSet, ContentViewSet
-from assessments.views import AssessmentViewSet, QuestionViewSet, AnswerViewSet
+from assessments.views import  QuestionViewSet
+from applications.views  import *
+from .views import *
 
 router = DefaultRouter()
 router.register('courses', CourseViewSet)
 router.register('modules', ModuleViewSet)
 router.register('contents', ContentViewSet)
-router.register('assessments', AssessmentViewSet)
+# router.register('assessments', AssessmentViewSet)
 router.register('questions', QuestionViewSet)
-router.register('answers', AnswerViewSet)
+# router.register('answers', AnswerViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+
+    # Data Processor
+    path('data-processor/', DataProcessorAPIView.as_view(), name='data-processor-list'),
+    path('data-processor/<int:pk>/', DataProcesssorDetailAPIView.as_view(), name='data-processor-detail'),
+    path('data-processor/<int:pk>/approve/', DataProcessorApprovalAPIView.as_view(), name='data-processor-approve'),
+    path('data-processor/<int:pk>/reject/', DataProcessorRejectAPIView.as_view(), name='data-processor-approve'),
+
+
+    # Data Controller
+    
+    path('data-controller/', DataControllerAPIView.as_view(), name='data-controller-list'),
+    path('data-controller/<int:pk>/', DataControllerDetailAPIView.as_view(), name='data-controller-detail'),
+    path('data-controller/<int:pk>/approve/', DataControllerApprovalAPIView.as_view(), name='data-controller-approve'),
+    path('data-controller/<int:pk>/reject/', DataControllerRejectAPIView.as_view(), name='data-controller-approve'),
+
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', LoginView.as_view(), name='login'),
 ]

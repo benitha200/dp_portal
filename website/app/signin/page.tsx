@@ -1,14 +1,73 @@
 "use client"
 import Link from "next/link";
-
-import { Metadata } from "next";
-
+import { useState } from 'react';
+import Cookies from 'js-cookie';
 
 const SigninPage = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    window.location.href = "http://localhost:3001";
+  const [formData, setFormData] = useState({
+    username: '',
+    password: ''
+  });
+  const [error, setError] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Cookie", "csrftoken=m4Li2tWC0w0QKzBHV7e8tal2rnYqh6nj; sessionid=aj0roiep3kgvgqq504r3sv6qqhzsrum1");
+
+    const raw = JSON.stringify({
+      "username": formData.username,
+      "password": formData.password
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw
+    };
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/login/", requestOptions);
+      if (!response.ok) {
+        throw new Error('Invalid credentials');
+      }
+      const responseData = await response.json(); 
+      console.log(responseData);
+    
+      // Set cookies
+      Cookies.set('username', responseData.username, { expires: 7 }); 
+      Cookies.set('token', responseData.token, { expires: 7 });
+      Cookies.set('role', responseData.role, { expires: 7 }); 
+      Cookies.set('institution', responseData.institution, { expires: 7 });
+      Cookies.set('email', responseData.email, { expires: 7 });
+    
+      // Pass cookies to next request
+      const myHeadersWithCookies = new Headers(requestOptions.headers);
+      myHeadersWithCookies.append("Cookie", `username=${responseData.username}; token=${responseData.token}; role=${responseData.role}; institution=${responseData.institution}; email=${responseData.email}`);
+    
+      const requestOptionsWithCookies = {
+        ...requestOptions,
+        headers: myHeadersWithCookies
+      };
+    
+      // Redirect after setting cookies and passing them to the next request
+      window.location.href = "http://localhost:3001";
+    } catch (error) {
+      setError(error.message);
+    }
+    
+  };
+
   return (
     <>
       <section className="relative z-10 overflow-hidden pb-16 pt-36 md:pb-20 lg:pb-28 lg:pt-[180px]">
@@ -23,25 +82,20 @@ const SigninPage = () => {
                   Login to your account for a faster checkout.
                 </p>
 
-                <div className="mb-8 flex items-center justify-center">
-                  <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color/50 sm:block"></span>
-                  <p className="w-full px-5 text-center text-base font-medium text-body-color">
-                    Sign in with your email
-                  </p>
-                  <span className="hidden h-[1px] w-full max-w-[70px] bg-body-color/50 sm:block"></span>
-                </div>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-8">
                     <label
                       htmlFor="email"
                       className="mb-3 block text-sm text-dark dark:text-white"
                     >
-                      Your Email
+                      Your username
                     </label>
                     <input
-                      type="email"
-                      name="email"
-                      placeholder="Enter your Email"
+                      type="text"
+                      name="username"
+                      value={formData.username}
+                      onChange={handleChange}
+                      placeholder="Enter your Username"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                     />
                   </div>
@@ -55,58 +109,18 @@ const SigninPage = () => {
                     <input
                       type="password"
                       name="password"
+                      value={formData.password}
+                      onChange={handleChange}
                       placeholder="Enter your Password"
                       className="border-stroke dark:text-body-color-dark dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                     />
-                  </div>
-                  <div className="mb-8 flex flex-col justify-between sm:flex-row sm:items-center">
-                    <div className="mb-4 sm:mb-0">
-                      <label
-                        htmlFor="checkboxLabel"
-                        className="flex cursor-pointer select-none items-center text-sm font-medium text-body-color"
-                      >
-                        <div className="relative">
-                          <input
-                            type="checkbox"
-                            id="checkboxLabel"
-                            className="sr-only"
-                          />
-                          <div className="box mr-4 flex h-5 w-5 items-center justify-center rounded border border-body-color border-opacity-20 dark:border-white dark:border-opacity-10">
-                            <span className="opacity-0">
-                              <svg
-                                width="11"
-                                height="8"
-                                viewBox="0 0 11 8"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M10.0915 0.951972L10.0867 0.946075L10.0813 0.940568C9.90076 0.753564 9.61034 0.753146 9.42927 0.939309L4.16201 6.22962L1.58507 3.63469C1.40401 3.44841 1.11351 3.44879 0.932892 3.63584C0.755703 3.81933 0.755703 4.10875 0.932892 4.29224L0.932878 4.29225L0.934851 4.29424L3.58046 6.95832C3.73676 7.11955 3.94983 7.2 4.1473 7.2C4.36196 7.2 4.55963 7.11773 4.71406 6.9584L10.0468 1.60234C10.2436 1.4199 10.2421 1.1339 10.0915 0.951972ZM4.2327 6.30081L4.2317 6.2998C4.23206 6.30015 4.23237 6.30049 4.23269 6.30082L4.2327 6.30081Z"
-                                  fill="#3056D3"
-                                  stroke="#3056D3"
-                                  strokeWidth="0.4"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                        </div>
-                        Keep me signed in
-                      </label>
-                    </div>
-                    <div>
-                      <a
-                        href="#0"
-                        className="text-sm font-medium text-primary hover:underline"
-                      >
-                        Forgot Password?
-                      </a>
-                    </div>
                   </div>
                   <div className="mb-6">
                     <button type="submit" className="shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90">
                       Sign in
                     </button>
                   </div>
+                  {error && <p className="text-red-500">{error}</p>}
                 </form>
                 <p className="text-center text-base font-medium text-body-color">
                   Don’t you have an account?{" "}

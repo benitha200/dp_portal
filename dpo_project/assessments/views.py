@@ -1,16 +1,21 @@
-# assessments/views.py
+# views.py
+
 from rest_framework import viewsets
-from .models import Assessment, Question, Answer
-from .serializers import AssessmentSerializer, QuestionSerializer, AnswerSerializer
+from .models import Question, UserResponse
+from .serializers import QuestionSerializer, UserResponseSerializer
+from rest_framework.permissions import IsAuthenticated
 
-class AssessmentViewSet(viewsets.ModelViewSet):
-    queryset = Assessment.objects.all()
-    serializer_class = AssessmentSerializer
-
-class QuestionViewSet(viewsets.ModelViewSet):
+class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
-class AnswerViewSet(viewsets.ModelViewSet):
-    queryset = Answer.objects.all()
-    serializer_class = AnswerSerializer
+class UserResponseViewSet(viewsets.ModelViewSet):
+    queryset = UserResponse.objects.all()
+    serializer_class = UserResponseSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return UserResponse.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

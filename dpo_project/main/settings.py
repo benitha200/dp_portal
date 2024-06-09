@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+# os.add_dll_directory(r"C:\Program Files\GTK3-Runtime Win64\bin")
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,8 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'main',
     'courses',
-    'assessments'
+    'assessments',
+    'applications',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -50,6 +57,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3001',
+     'http://localhost:3000',
+      'http://localhost:3002',
 ]
 
 ROOT_URLCONF = 'main.urls'
@@ -87,6 +103,16 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -106,6 +132,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  # Port for TLS
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'benithaiyuyisenga2002@gmail.com'  # Your Gmail email address
+EMAIL_HOST_PASSWORD = 'h b b n n p i f r r i j b y u u'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

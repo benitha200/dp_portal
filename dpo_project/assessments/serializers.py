@@ -1,22 +1,21 @@
-# assessments/serializers.py
-from rest_framework import serializers
-from .models import Assessment, Question, Answer
+# serializers.py
 
-class AnswerSerializer(serializers.ModelSerializer):
+from rest_framework import serializers
+from .models import Question, Option, UserResponse
+
+class OptionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Answer
-        fields = ('id', 'text', 'is_correct', 'order')
+        model = Option
+        fields = ['id', 'text', 'is_correct']
 
 class QuestionSerializer(serializers.ModelSerializer):
-    answers = AnswerSerializer(many=True, read_only=True)
+    options = OptionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Question
-        fields = ('id', 'text', 'order', 'answers')
+        fields = ['id', 'text', 'options']
 
-class AssessmentSerializer(serializers.ModelSerializer):
-    questions = QuestionSerializer(many=True, read_only=True)
-
+class UserResponseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Assessment
-        fields = ('id', 'title', 'description', 'pass_score', 'questions')
+        model = UserResponse
+        fields = ['user', 'question', 'selected_option']

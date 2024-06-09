@@ -34,24 +34,30 @@ const menuData: Menu[] = [
       {
         id: 41,
         title: "Data Controller Certificate",
-        path: "/about",
+        path: "/form3",
         newTab: false,
       },
       {
         id: 42,
         title: "Data Processor Certificate",
-        path: "/contact",
+        path: "/form4",
         newTab: false,
       },
       {
         id: 43,
         title: "Authorization To Transfer Data Outside Rwanda",
-        path: "/blog",
+        path: "/form2",
         newTab: false,
       },
       {
         id: 44,
         title: "Authorization To Store Data Outside Rwanda",
+        path: "/form2",
+        newTab: false,
+      },
+      {
+        id: 44,
+        title: "Compliant Form",
         path: "/blog-sidebar",
         newTab: false,
       },
