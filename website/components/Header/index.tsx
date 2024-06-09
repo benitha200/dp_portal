@@ -56,27 +56,27 @@ const Header = () => {
                   sticky ? "py-5 lg:py-2" : "py-8"
                 } `}
               >
-                <h1 className="mb-5 text-2xl font-bold leading-tight text-black dark:text-white sm:text-2xl sm:leading-tight md:text-3xl md:leading-tight">
+                {/* <h1 className="mb-5 text-2xl font-bold leading-tight text-black dark:text-white sm:text-2xl sm:leading-tight md:text-3xl md:leading-tight">
                  
                 
                 <span className="mb-5 text-2xl font-bold leading-tight text-primary dark:text-white sm:text-2xl ml-2 sm:leading-tight md:text-3xl md:leading-tight">
                 ProtectIQ 
-                </span></h1>
+                </span></h1> */}
                 
-                {/* <Image
-                  src="/images/logo/logo-2.svg"
+                <Image
+                  src="/data-protection-portal-logo/svg/logo-no-background.svg"
                   alt="logo"
-                  width={140}
-                  height={30}
+                  width={280}
+                  height={120}
                   className="w-full dark:hidden"
                 />
                 <Image
-                  src="/images/logo/logo.svg"
+                  src="/data-protection-portal-logo/svg/logo-no-background.svg"
                   alt="logo"
-                  width={140}
-                  height={30}
+                  width={280}
+                  height={120}
                   className="hidden w-full dark:block"
-                /> */}
+                />
               </Link>
             </div>
             <div className="flex w-full items-center justify-between px-4">

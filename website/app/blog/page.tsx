@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "This is trainings page",
   // other metadata
 };
-
+ 
 const Blog = () => {
   return (
     <>
@@ -18,7 +18,7 @@ const Blog = () => {
         description="Empower Your Team with Specialized Trainings for Data Processor,Data Controller and Data Security"
       />
 
-      <section className="pb-[120px] pt-[120px]">
+      <section className="pb-[20px] pt-[10px]">
         <div className="container">
           <div className="-mx-4 flex flex-wrap justify-center">
             {blogData.map((blog) => (

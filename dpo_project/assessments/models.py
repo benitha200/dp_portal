@@ -1,29 +1,24 @@
-# assessments/models.py
 from django.db import models
-from courses.models import Course
-
-class Assessment(models.Model):
-    course = models.ForeignKey(Course, related_name='assessments', on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    description = models.TextField(blank=True, null=True)
-    pass_score = models.PositiveIntegerField()
-
-    def __str__(self):
-        return f"{self.course.title} - {self.title}"
+from django.contrib.auth.models import User
 
 class Question(models.Model):
-    assessment = models.ForeignKey(Assessment, related_name='questions', on_delete=models.CASCADE)
-    text = models.TextField()
-    order = models.PositiveIntegerField()
+    text = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"{self.assessment.title} - Question {self.order}"
+        return self.text
 
-class Answer(models.Model):
-    question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
-    text = models.TextField()
-    is_correct = models.BooleanField()
-    order = models.PositiveIntegerField()
+class Option(models.Model):
+    question = models.ForeignKey(Question, related_name='options', on_delete=models.CASCADE)
+    text = models.CharField(max_length=255)
+    is_correct = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.question.text} - {self.text}"
+        return self.text
+
+class UserResponse(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    selected_option = models.ForeignKey(Option, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'question')

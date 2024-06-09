@@ -105,11 +105,11 @@ const BlogDetailsPage = () => {
 
   if (showResults) {
     return (
-      <div className="mx-auto text-center" style={{paddingTop:"10rem"}}>
+      <div className="mx-auto text-left" style={{paddingTop:"10rem",paddingLeft:"20rem"}}>
         <h1 className="text-2xl font-bold mb-4">Quiz Results</h1>
         <p>Your score is {score} out of {quizData.length}</p>
         <p>{renderSuggestions()}</p>
-        <ul className="text-center mt-4 list-disc list-inside">
+        <ul className="text-left mt-14 list-disc list-inside">
           {improvements.map((improvement, index) => (
             <li key={index} className="mb-2 p-2 text-dark">{improvement}</li>
           ))}
@@ -122,7 +122,7 @@ const BlogDetailsPage = () => {
   }
 
   return (
-    <div className="mx-auto max-w-7xl p-15 mb-12"  style={{paddingTop:"10rem"}}>
+    <div className="mx-auto max-w-4xl p-15 mb-12 shadow-md m-3"  style={{paddingTop:"10rem",paddingBottom:"5rem",paddingLeft:'5rem'}}>
       <h1 className="text-2xl font-bold mb-4">Data Protection Compliance Quiz</h1>
       <div className="card mb-4">
         <h2 className="text-xl font-bold mb-4">{quizData[currentQuestionIndex].question}</h2>
